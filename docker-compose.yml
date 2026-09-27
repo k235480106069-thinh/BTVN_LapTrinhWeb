@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # 1. Máy chủ Web Nginx
+  nginx:
+    image: nginx:latest
+    container_name: web_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./html:/usr/share/nginx/html
+    restart: always
+
+  # 2. Môi trường Node-RED
+  nodered:
+    image: nodered/node-red:latest
+    container_name: web_nodered
+    ports:
+      - "1880:1880"
+    restart: always
+
+  # 3. Cơ sở dữ liệu MariaDB
+  mariadb:
+    image: mariadb:latest
+    container_name: web_mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword123
+      MYSQL_DATABASE: web_db
+      MYSQL_USER: webuser
+      MYSQL_PASSWORD: webpassword123
+    restart: always
+
+  # 4. Trình quản lý CSDL phpMyAdmin
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: web_phpmyadmin
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mariadb
+    depends_on:
+      - mariadb
+    restart: always
+
+  # 5. Đường hầm Cloudflared
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: web_cloudflared
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=YOUR_CLOUDFLARE_TOKEN_HERE
+    restart: always
