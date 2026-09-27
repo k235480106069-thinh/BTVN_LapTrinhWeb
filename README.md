@@ -25,6 +25,7 @@ Dự án thực hành thiết lập môi trường giả lập Linux trên Windo
 **3.4. Cấu hình Nginx định tuyến thành công 2 tên miền ảo**
 <img src="./images/4_1domains.png" alt="Kết quả kiểm tra Domain">
 <img src="./images/4_2domains.png" alt="Kết quả kiểm tra Domain">
+
 **3.5. Kiểm tra hoạt động của Node-RED và phpMyAdmin**
 <img src="./images/5_1services.png" alt="Kết quả truy cập Port">
 <img src="./images/5_2services.png" alt="Kết quả truy cập Port">
